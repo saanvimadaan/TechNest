@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechNest — Your Home for Smart Electronics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<script>if(localStorage.getItem('technest_theme')==='light')document.body.classList.add('light-mode');</script>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="#" class="logo">
+        <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+          <path d="M5 15 L16 5 L27 15" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 13 V27 H23 V13" stroke="#35d0dd" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="16" cy="21" r="3" fill="#ff7a7a"/>
+        </svg>
+        <span class="logo-text">
+        Tech<span>Nest</span>
+        </span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li class="mobile-search">
+          <div class="search-box">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input type="text" placeholder="Search electronics...">
+          </div>
+        </li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="#trending">Deals</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="contact.html">Support</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <div class="search-box">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="text" placeholder="Search electronics...">
+        </div>
+        <button class="icon-btn" aria-label="Wishlist" id="navWish">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+          <span class="cart-count" id="wishCount">0</span>
+        </button>
+        <a href="cart.html" class="icon-btn" aria-label="Cart" id="navCart">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="21" r="1.4"/><circle cx="19" cy="21" r="1.4"/><path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21.5 8H6"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+        <a href="login.html" class="icon-btn" aria-label="Account">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        </a>
+        <button class="icon-btn theme-toggle" aria-label="Toggle light mode" id="themeToggle">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </button>
+        <button class="burger icon-btn" aria-label="Menu" aria-expanded="false" aria-controls="navLinks" id="burgerBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">SMART LIVING, WIRED IN</span>
+        <h1>Your Home for <span class="grad">Smart Electronics</span></h1>
+        <p>From everyday gadgets to serious upgrades — TechNest curates the tech that fits your life, backed by real warranties and a team that actually answers.</p>
+        <div class="hero-ctas">
+          <a href="#trending" class="btn btn-primary">
+            Shop Trending
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#categories" class="btn btn-ghost">Browse Categories</a>
+        </div>
+        <div class="trust-row">
+          <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Free shipping over ₹4,999</div>
+          <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>2-year warranty</div>
+          <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>30-day returns</div>
+        </div>
+      </div>
+
+      <div class="hero-shot">
+        <div class="hero-shot-glow"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hero-marquee">
+    <div class="hero-marquee-label"><span class="live-dot"></span>LIVE DROPS</div>
+    <div class="hero-marquee-viewport">
+      <div class="hero-marquee-track" id="heroMarqueeTrack"></div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section class="section" id="categories">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">BROWSE</span>
+          <h2>Shop by category</h2>
+        </div>
+        <p>Six aisles, zero clutter — jump straight to what you're actually looking for.</p>
+      </div>
+
+      <div class="cat-grid">
+        <a href="shop.html?cat=phones" class="cat-card reveal">
+          <div class="photo"><img src="https://images.unsplash.com/photo-1510717029971-27681a0e9da9?q=80&w=500&auto=format&fit=crop" alt="Smartphones"></div>
+          <div class="cat-card-inner">
+            <div class="cat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+            <span>Phones</span>
+          </div>
+        </a>
+        <a href="shop.html?cat=computing" class="cat-card reveal">
+          <div class="photo"><img src="https://images.unsplash.com/photo-1571855193796-c58af0844132?q=80&w=500&auto=format&fit=crop" alt="Laptops and Computing"></div>
+          <div class="cat-card-inner">
+            <div class="cat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M2 20h20"/></svg></div>
+            <span>Computing</span>
+          </div>
+        </a>
+        <a href="shop.html?cat=audio" class="cat-card reveal">
+          <div class="photo"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=500&auto=format&fit=crop" alt="Audio and Headphones"></div>
+          <div class="cat-card-inner">
+            <div class="cat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 14a8 8 0 0 1 16 0"/><rect x="2" y="14" width="6" height="7" rx="1.5"/><rect x="16" y="14" width="6" height="7" rx="1.5"/></svg></div>
+            <span>Audio</span>
+          </div>
+        </a>
+        <a href="shop.html?cat=wearables" class="cat-card reveal">
+          <div class="photo"><img src="https://images.unsplash.com/photo-1698729616358-4fadac492844?q=80&w=500&auto=format&fit=crop" alt="Wearables and Smartwatches"></div>
+          <div class="cat-card-inner">
+            <div class="cat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="3" width="10" height="7" rx="1.5"/><path d="M9 15h6M9 19h6"/><circle cx="12" cy="16.5" r="4"/></svg></div>
+            <span>Wearables</span>
+          </div>
+        </a>
+        <a href="shop.html?cat=home" class="cat-card reveal">
+          <div class="photo"><img src="https://images.unsplash.com/photo-1542483381-41a479b1fb88?q=80&w=500&auto=format&fit=crop" alt="Smart Home Devices"></div>
+          <div class="cat-card-inner">
+            <div class="cat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-6 9 6-9 6-9-6Z"/><path d="M3 9v6l9 6 9-6V9"/></svg></div>
+            <span>Smart Home</span>
+          </div>
+        </a>
+        <a href="shop.html?cat=gaming" class="cat-card reveal">
+          <div class="photo"><img src="https://images.unsplash.com/photo-1675701299008-7958c985f955?q=80&w=500&auto=format&fit=crop" alt="Gaming Consoles and Gear"></div>
+          <div class="cat-card-inner">
+            <div class="cat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10v4M10 10v4M14 10l4 4M18 10l-4 4"/></svg></div>
+            <span>Gaming</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRENDING PRODUCTS -->
+  <section class="section" id="trending">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">RIGHT NOW</span>
+          <h2>Trending this week</h2>
+        </div>
+        <a href="shop.html" class="section-link">View all products
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-filter="all">All</button>
+        <button class="tab" data-filter="phones">Phones</button>
+        <button class="tab" data-filter="computing">Computing</button>
+        <button class="tab" data-filter="audio">Audio</button>
+        <button class="tab" data-filter="wearables">Wearables</button>
+        <button class="tab" data-filter="home">Smart Home</button>
+        <button class="tab" data-filter="gaming">Gaming</button>
+      </div>
+
+      <div class="prod-grid" id="prodGrid"></div>
+    </div>
+  </section>
+
+  <!-- DEAL BANNER -->
+  <section class="section" style="padding-top:0;">
+    <div class="deal-banner reveal">
+      <div class="photo"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1400&auto=format&fit=crop" alt="Headphones close up"></div>
+      <div class="deal-left">
+        <span class="eyebrow">DEAL OF THE WEEK</span>
+        <h3>Nest Buds Pro — 30% off, this week only</h3>
+        <p>Active noise cancelling earbuds with 36-hour case battery. Ends when the clock hits zero.</p>
+      </div>
+      <div class="timer" id="timer">
+        <div class="timer-block"><div class="num" id="t-days">02</div><div class="lbl">Days</div></div>
+        <div class="timer-block"><div class="num" id="t-hours">14</div><div class="lbl">Hours</div></div>
+        <div class="timer-block"><div class="num" id="t-mins">36</div><div class="lbl">Mins</div></div>
+        <div class="timer-block"><div class="num" id="t-secs">09</div><div class="lbl">Secs</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY TECHNEST -->
+  <section class="section" id="why">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">WHY TECHNEST</span>
+          <h2>Built around the way you actually shop</h2>
+        </div>
+      </div>
+      <div class="feat-grid">
+        <div class="feat-card reveal">
+          <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21.5 8H6"/></svg></div>
+          <h4>Free, fast shipping</h4>
+          <p>Every order over ₹4,999 ships free, with most gadgets landing on your doorstep in 2–4 days.</p>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg></div>
+          <h4>2-year warranty</h4>
+          <p>Every device we sell is covered, no questions asked, no fine print to dig through.</p>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+          <h4>Secure checkout</h4>
+          <p>Encrypted payments and buyer protection on every single order, every single time.</p>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22a10 10 0 1 0-10-10c0 2 .6 3.9 1.6 5.5L2 22l4.7-1.5A9.96 9.96 0 0 0 12 22Z"/></svg></div>
+          <h4>Real human support</h4>
+          <p>A support team that picks up, seven days a week — no chatbot mazes, ever.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="section">
+    <div class="wrap">
+      <div class="news-box reveal">
+        <span class="eyebrow">STAY IN THE LOOP</span>
+        <h2>Join the Nest</h2>
+        <p>Early access to drops, restocks, and deals — one email a week, unsubscribe whenever.</p>
+        <form class="news-form" id="newsForm">
+          <input type="email" placeholder="you@email.com" required>
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+        <div class="form-note" id="formNote"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#" class="logo">
+          <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+            <path d="M5 15 L16 5 L27 15" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 13 V27 H23 V13" stroke="#35d0dd" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="21" r="3" fill="#ff7a7a"/>
+          </svg>
+          Tech<span>Nest</span>
+        </a>
+        <p>Your home for smart electronics — thoughtfully sourced gadgets, honest pricing, and support that sticks around after the sale.</p>
+        <div class="social-row">
+          <a href="#" aria-label="Twitter/X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 3H22l-7.6 8.7L23 21h-6.9l-5.4-6.6L4.5 21H1.3l8.1-9.3L1 3h7l4.9 6.1L18.9 3Z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l6 3-6 3V9Z" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="shop.html?cat=phones">Phones</a></li>
+          <li><a href="shop.html?cat=computing">Computing</a></li>
+          <li><a href="shop.html?cat=audio">Audio</a></li>
+          <li><a href="shop.html?cat=wearables">Wearables</a></li>
+          <li><a href="shop.html?cat=home">Smart Home</a></li>
+          <li><a href="shop.html?cat=gaming">Gaming</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Support</h5>
+        <ul>
+          <li><a href="contact.html">Track Order</a></li>
+          <li><a href="contact.html">Returns</a></li>
+          <li><a href="contact.html">Warranty</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About TechNest</a></li>
+          <li><a href="about.html#careers">Careers</a></li>
+          <li><a href="about.html">Press</a></li>
+          <li><a href="about.html">Blog</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 TechNest. All rights reserved.</span>
+      <div>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>
+  <span id="toastMsg">Added to cart</span>
+</div>
+
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

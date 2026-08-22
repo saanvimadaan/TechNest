@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact & Support — TechNest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<script>if(localStorage.getItem('technest_theme')==='light')document.body.classList.add('light-mode');</script>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="index.html" class="logo">
+        <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+          <path d="M5 15 L16 5 L27 15" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 13 V27 H23 V13" stroke="#35d0dd" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="16" cy="21" r="3" fill="#ff7a7a"/>
+        </svg>
+        <span class="logo-text">Tech<span>Nest</span></span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li class="mobile-search">
+          <div class="search-box">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input type="text" placeholder="Search electronics...">
+          </div>
+        </li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="index.html#trending">Deals</a></li>
+        <li><a href="index.html#categories">Categories</a></li>
+        <li><a href="contact.html" style="color:var(--text)">Support</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <div class="search-box">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="text" placeholder="Search electronics...">
+        </div>
+        <button class="icon-btn" aria-label="Wishlist" id="navWish">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+          <span class="cart-count" id="wishCount">0</span>
+        </button>
+        <a href="cart.html" class="icon-btn" aria-label="Cart" id="navCart">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="21" r="1.4"/><circle cx="19" cy="21" r="1.4"/><path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21.5 8H6"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+        <a href="login.html" class="icon-btn" aria-label="Account">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        </a>
+        <button class="icon-btn theme-toggle" aria-label="Toggle light mode" id="themeToggle">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </button>
+        <button class="burger icon-btn" aria-label="Menu" aria-expanded="false" aria-controls="navLinks" id="burgerBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Support</span></div>
+      <span class="eyebrow">WE ACTUALLY PICK UP</span>
+      <h1>Contact & support</h1>
+      <p>Order questions, warranty claims, or just deciding between two products — reach us however's easiest.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="contact-grid">
+
+        <div class="reveal">
+          <div class="contact-info-card">
+            <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22a10 10 0 1 0-10-10c0 2 .6 3.9 1.6 5.5L2 22l4.7-1.5A9.96 9.96 0 0 0 12 22Z"/></svg></div>
+            <div>
+              <h4>Live chat & phone</h4>
+              <p>Mon–Sun, 9am–9pm IST · +91 80 4000 1234</p>
+            </div>
+          </div>
+          <div class="contact-info-card">
+            <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+            <div>
+              <h4>Email</h4>
+              <p>support@technest.example — replies within a day</p>
+            </div>
+          </div>
+          <div class="contact-info-card">
+            <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+            <div>
+              <h4>Warehouse & returns</h4>
+              <p>4th Floor, Nest House, HSR Layout, Bengaluru 560102</p>
+            </div>
+          </div>
+
+          <div class="photo reveal" style="border-radius:var(--radius); aspect-ratio:16/10; margin-top:24px; border:1px solid var(--border);">
+            <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=900&auto=format&fit=crop" alt="Map view of city streets near the TechNest warehouse">
+          </div>
+        </div>
+
+        <form class="contact-form reveal" id="contactForm">
+          <div class="form-row">
+            <div class="field">
+              <label for="cName">Full name</label>
+              <input type="text" id="cName" placeholder="Your name" required>
+            </div>
+            <div class="field">
+              <label for="cEmail">Email</label>
+              <input type="email" id="cEmail" placeholder="you@email.com" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="cTopic">What's this about</label>
+            <select id="cTopic">
+              <option>Order status</option>
+              <option>Returns & warranty</option>
+              <option>Product question</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cOrder">Order number (optional)</label>
+            <input type="text" id="cOrder" placeholder="e.g. TN482913">
+          </div>
+          <div class="field">
+            <label for="cMsg">Message</label>
+            <textarea id="cMsg" placeholder="Tell us what's going on..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send message</button>
+          <div class="form-note" id="contactNote"></div>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">BEFORE YOU WRITE IN</span>
+          <h2>Frequently asked</h2>
+        </div>
+      </div>
+      <div id="faqList" class="reveal" style="max-width:760px;">
+        <div class="faq-item open">
+          <div class="faq-q">How long does shipping take?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></div>
+          <div class="faq-a"><p>Most orders ship within 24 hours and arrive in 2–4 business days. Same-day delivery is available in 18 cities at checkout.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What does the 2-year warranty actually cover?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></div>
+          <div class="faq-a"><p>Manufacturing defects and hardware failure under normal use, full stop. No usage logs to submit, no repair-shop runaround — contact us and we'll sort a replacement or repair.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can I return something after opening it?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></div>
+          <div class="faq-a"><p>Yes — you have 30 days from delivery, opened or not. We just ask that it's in resellable condition with the original accessories.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do you ship outside India?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></div>
+          <div class="faq-a"><p>Not yet — we currently ship within India only, but international shipping is on our roadmap for next year.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How do I track an existing order?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></div>
+          <div class="faq-a"><p>Use the order number from your confirmation email in the contact form above, and we'll pull up the latest status for you.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+            <path d="M5 15 L16 5 L27 15" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 13 V27 H23 V13" stroke="#35d0dd" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="21" r="3" fill="#ff7a7a"/>
+          </svg>
+          Tech<span>Nest</span>
+        </a>
+        <p>Your home for smart electronics — thoughtfully sourced gadgets, honest pricing, and support that sticks around after the sale.</p>
+        <div class="social-row">
+          <a href="#" aria-label="Twitter/X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 3H22l-7.6 8.7L23 21h-6.9l-5.4-6.6L4.5 21H1.3l8.1-9.3L1 3h7l4.9 6.1L18.9 3Z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l6 3-6 3V9Z" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="shop.html?cat=phones">Phones</a></li>
+          <li><a href="shop.html?cat=computing">Computing</a></li>
+          <li><a href="shop.html?cat=audio">Audio</a></li>
+          <li><a href="shop.html?cat=wearables">Wearables</a></li>
+          <li><a href="shop.html?cat=home">Smart Home</a></li>
+          <li><a href="shop.html?cat=gaming">Gaming</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Support</h5>
+        <ul>
+          <li><a href="contact.html">Track Order</a></li>
+          <li><a href="contact.html">Returns</a></li>
+          <li><a href="contact.html">Warranty</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About TechNest</a></li>
+          <li><a href="about.html#careers">Careers</a></li>
+          <li><a href="about.html">Press</a></li>
+          <li><a href="about.html">Blog</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 TechNest. All rights reserved.</span>
+      <div>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>
+  <span id="toastMsg">Added to cart</span>
+</div>
+
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if(!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Auto-fill user if logged in
+  const authUser = typeof getAuthUser === 'function' ? getAuthUser() : null;
+  if(authUser){
+    const nameInput = document.getElementById('cName');
+    const emailInput = document.getElementById('cEmail');
+    if(nameInput && !nameInput.value) nameInput.value = authUser.name;
+    if(emailInput && !emailInput.value) emailInput.value = authUser.email;
+  }
+
+  // Pre-fill order number if passed via URL ?order=
+  const urlParams = new URLSearchParams(window.location.search);
+  const orderParam = urlParams.get('order');
+  if(orderParam){
+    const orderInput = document.getElementById('cOrder');
+    if(orderInput) orderInput.value = orderParam;
+  }
+
+  // Contact / Support form submission
+  const contactForm = document.getElementById('contactForm');
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('cName').value.trim();
+    const email = document.getElementById('cEmail').value.trim();
+    const topic = document.getElementById('cTopic').value;
+    const order = document.getElementById('cOrder').value.trim();
+    const message = document.getElementById('cMsg').value.trim();
+    
+    const ticketId = 'TN-' + Math.floor(100000 + Math.random() * 900000);
+    const dateStr = new Date().toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric', hour:'2-digit', minute:'2-digit' });
+
+    const ticket = { ticketId, name, email, topic, order, message, date: dateStr, status: 'Open' };
+    
+    let tickets = [];
+    try { tickets = JSON.parse(localStorage.getItem('technest_support_tickets')) || []; } catch(err){}
+    tickets.unshift(ticket);
+    localStorage.setItem('technest_support_tickets', JSON.stringify(tickets));
+
+    const note = document.getElementById('contactNote');
+    note.innerHTML = `
+      <div style="margin-top:16px; padding:18px; background:var(--surface-2); border:1px solid var(--border-strong); border-radius:12px; text-align:left;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <span style="font-family:'IBM Plex Mono', monospace; font-size:12.5px; font-weight:700; color:var(--cyan);">Ticket #${ticketId}</span>
+          <span style="font-size:11px; padding:3px 8px; border-radius:999px; background:var(--good); color:#052e16; font-weight:700;">RECEIVED</span>
+        </div>
+        <p style="font-size:13.5px; color:var(--text); margin-bottom:6px;"><strong>Thank you, ${name}!</strong> Your inquiry regarding <em>${topic}</em> has been assigned to our support team.</p>
+        <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:4px;">A confirmation was sent to <strong>${email}</strong>. Expected response within <strong>2–4 hours</strong>.</p>
+        ${order ? `<div style="margin-top:10px; padding:10px; background:var(--bg); border-radius:8px; font-size:12px; color:var(--text-muted); border:1px solid var(--border);">📦 <strong>Order Tracking (${order}):</strong> In transit with Bluedart Express — On schedule for delivery.</div>` : ''}
+      </div>
+    `;
+    note.classList.add('show');
+    contactForm.reset();
+    showToast(`Support Ticket #${ticketId} created!`);
+  });
+</script>
+
+</body>
+</html>

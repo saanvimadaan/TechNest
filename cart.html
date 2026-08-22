@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Cart — TechNest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<script>if(localStorage.getItem('technest_theme')==='light')document.body.classList.add('light-mode');</script>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="index.html" class="logo">
+        <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+          <path d="M5 15 L16 5 L27 15" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 13 V27 H23 V13" stroke="#35d0dd" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="16" cy="21" r="3" fill="#ff7a7a"/>
+        </svg>
+        <span class="logo-text">Tech<span>Nest</span></span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li class="mobile-search">
+          <div class="search-box">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input type="text" placeholder="Search electronics...">
+          </div>
+        </li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="index.html#trending">Deals</a></li>
+        <li><a href="index.html#categories">Categories</a></li>
+        <li><a href="contact.html">Support</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <div class="search-box">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="text" placeholder="Search electronics...">
+        </div>
+        <button class="icon-btn" aria-label="Wishlist" id="navWish">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+          <span class="cart-count" id="wishCount">0</span>
+        </button>
+        <a href="cart.html" class="icon-btn" aria-label="Cart" id="navCart" style="border-color:var(--violet);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="21" r="1.4"/><circle cx="19" cy="21" r="1.4"/><path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21.5 8H6"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+        <a href="login.html" class="icon-btn" aria-label="Account">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        </a>
+        <button class="icon-btn theme-toggle" aria-label="Toggle light mode" id="themeToggle">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </button>
+        <button class="burger icon-btn" aria-label="Menu" aria-expanded="false" aria-controls="navLinks" id="burgerBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero" style="padding-bottom:32px;">
+    <div class="wrap">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Cart</span></div>
+      <span class="eyebrow">READY WHEN YOU ARE</span>
+      <h1>Your cart</h1>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:28px;">
+    <div class="wrap">
+
+      <!-- Stepper Navigation -->
+      <div class="checkout-stepper" id="checkoutStepper">
+        <div class="step-item active" id="stepIndicator1" onclick="goToStep(1)">
+          <span class="step-num">1</span>
+          <span class="step-lbl">Bag</span>
+        </div>
+        <span class="step-arrow">›</span>
+        <div class="step-item" id="stepIndicator2" onclick="goToStep(2)">
+          <span class="step-num">2</span>
+          <span class="step-lbl">Delivery Address</span>
+        </div>
+        <span class="step-arrow">›</span>
+        <div class="step-item" id="stepIndicator3" onclick="goToStep(3)">
+          <span class="step-num">3</span>
+          <span class="step-lbl">Payment Mode</span>
+        </div>
+        <span class="step-arrow">›</span>
+        <div class="step-item" id="stepIndicator4">
+          <span class="step-num">4</span>
+          <span class="step-lbl">Confirmation</span>
+        </div>
+      </div>
+
+      <div class="cart-grid" id="cartGrid">
+        
+        <!-- Left Column: Step Panels -->
+        <div class="checkout-left-col">
+          
+          <!-- STEP 1: CART ITEMS -->
+          <div id="stepBagContainer">
+            <div class="cart-list" id="cartList"></div>
+          </div>
+
+          <!-- STEP 2: DELIVERY ADDRESS -->
+          <div id="stepAddressContainer" style="display:none;">
+            <div class="checkout-box">
+              <div class="checkout-box-header">
+                <div>
+                  <div class="checkout-box-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                    Delivery Address
+                  </div>
+                  <div style="font-size:12.5px; color:var(--text-muted); margin-top:2px;">Where should we deliver your order?</div>
+                </div>
+                <span class="checkout-badge">STEP 2 OF 3</span>
+              </div>
+
+              <!-- Saved Address Card (if available) -->
+              <div id="savedAddrSection" style="display:none;">
+                <div class="saved-addr-card" id="savedAddrCard">
+                  <div class="saved-addr-info">
+                    <h4 id="savedAddrName">John Doe <span class="checkout-badge" id="savedAddrType">HOME</span></h4>
+                    <p id="savedAddrStreet">123 Tech Lane, HSR Layout</p>
+                    <p id="savedAddrCity">Bengaluru, Karnataka - 560102</p>
+                    <p id="savedAddrPhone" style="font-family:'IBM Plex Mono', monospace; font-size:12px; margin-top:4px;">Phone: +91 98765 43210</p>
+                  </div>
+                  <button type="button" class="btn btn-ghost" id="editAddrBtn" style="padding:6px 14px; font-size:12px;">Edit / New</button>
+                </div>
+              </div>
+
+              <!-- Address Form -->
+              <form id="addressForm">
+                <div class="addr-grid">
+                  <div class="field">
+                    <label for="addrFullName">Full Name *</label>
+                    <input type="text" id="addrFullName" placeholder="e.g. Rahul Sharma" required>
+                  </div>
+                  <div class="field">
+                    <label for="addrPhone">Mobile Number (10 digits) *</label>
+                    <input type="tel" id="addrPhone" placeholder="e.g. 9876543210" pattern="[0-9]{10}" maxlength="10" required>
+                  </div>
+                  <div class="field full-w">
+                    <label for="addrStreet">Flat, House No., Building, Street / Road *</label>
+                    <input type="text" id="addrStreet" placeholder="e.g. Flat 402, Nest Orchid, 14th Main Road" required>
+                  </div>
+                  <div class="field">
+                    <label for="addrLandmark">Locality / Landmark (Optional)</label>
+                    <input type="text" id="addrLandmark" placeholder="e.g. Near HSR BDA Complex">
+                  </div>
+                  <div class="field">
+                    <label for="addrPin">PIN Code (6 digits) *</label>
+                    <input type="text" id="addrPin" placeholder="e.g. 560102" pattern="[0-9]{6}" maxlength="6" required>
+                  </div>
+                  <div class="field">
+                    <label for="addrCity">City / Town *</label>
+                    <input type="text" id="addrCity" placeholder="e.g. Bengaluru" required>
+                  </div>
+                  <div class="field">
+                    <label for="addrState">State *</label>
+                    <select id="addrState" required>
+                      <option value="">Select State</option>
+                      <option value="Andhra Pradesh">Andhra Pradesh</option>
+                      <option value="Delhi NCR">Delhi NCR</option>
+                      <option value="Gujarat">Gujarat</option>
+                      <option value="Haryana">Haryana</option>
+                      <option value="Karnataka" selected>Karnataka</option>
+                      <option value="Kerala">Kerala</option>
+                      <option value="Maharashtra">Maharashtra</option>
+                      <option value="Punjab">Punjab</option>
+                      <option value="Rajasthan">Rajasthan</option>
+                      <option value="Tamil Nadu">Tamil Nadu</option>
+                      <option value="Telangana">Telangana</option>
+                      <option value="Uttar Pradesh">Uttar Pradesh</option>
+                      <option value="West Bengal">West Bengal</option>
+                      <option value="Other">Other State / UT</option>
+                    </select>
+                  </div>
+                  <div class="field full-w" style="margin-bottom:6px;">
+                    <label>Address Type</label>
+                    <div class="addr-type-group">
+                      <div class="addr-type-pill active" data-type="Home">🏠 Home (All Day)</div>
+                      <div class="addr-type-pill" data-type="Work">🏢 Work (9am–6pm)</div>
+                      <div class="addr-type-pill" data-type="Other">📍 Other</div>
+                    </div>
+                  </div>
+                  <div class="field full-w" style="margin-bottom:0;">
+                    <label class="check-row">
+                      <input type="checkbox" id="saveAddrCheck" checked> Save this address for future purchases
+                    </label>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- STEP 3: PAYMENT MODE -->
+          <div id="stepPaymentContainer" style="display:none;">
+            <div class="checkout-box">
+              <div class="checkout-box-header">
+                <div>
+                  <div class="checkout-box-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                    Payment Mode
+                  </div>
+                  <div style="font-size:12.5px; color:var(--text-muted); margin-top:2px;">Select your preferred payment method</div>
+                </div>
+                <span class="checkout-badge">100% SECURE</span>
+              </div>
+
+              <!-- Address Recap Strip -->
+              <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-alt); border:1px solid var(--border); border-radius:10px; padding:12px 16px; margin-bottom:18px; font-size:13px;">
+                <div>
+                  <span style="color:var(--text-faint); font-size:11.5px; text-transform:uppercase; letter-spacing:0.06em; font-family:'IBM Plex Mono', monospace;">DELIVERING TO:</span>
+                  <div style="font-weight:700; color:var(--text); margin-top:2px;" id="paymentAddrSummary">Rahul Sharma, Bengaluru (560102)</div>
+                </div>
+                <button type="button" onclick="goToStep(2)" class="btn btn-ghost" style="padding:4px 10px; font-size:11.5px;">Change</button>
+              </div>
+
+              <!-- Payment Options List -->
+              <div class="payment-methods-list">
+                
+                <!-- Option 1: UPI -->
+                <div class="payment-option active" data-method="upi">
+                  <div class="payment-header" onclick="selectPaymentMethod('upi')">
+                    <div class="payment-header-left">
+                      <div class="payment-radio"></div>
+                      <div>
+                        <div class="payment-title">
+                          UPI / QR Code
+                          <span class="checkout-badge" style="background:var(--cyan-soft); color:var(--cyan);">FASTEST</span>
+                        </div>
+                        <div class="payment-sub">Google Pay, PhonePe, Paytm, BHIM, Cred</div>
+                      </div>
+                    </div>
+                    <div class="payment-icon-group">
+                      <span style="font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:700; color:var(--cyan);">0% FEE</span>
+                    </div>
+                  </div>
+                  <div class="payment-subpanel">
+                    <div class="upi-quick-apps">
+                      <div class="upi-app-btn active" data-app="gpay">
+                        <span>⚡ GPay</span>
+                      </div>
+                      <div class="upi-app-btn" data-app="phonepe">
+                        <span>🟣 PhonePe</span>
+                      </div>
+                      <div class="upi-app-btn" data-app="paytm">
+                        <span>🔵 Paytm</span>
+                      </div>
+                      <div class="upi-app-btn" data-app="qr">
+                        <span>📷 Scan QR</span>
+                      </div>
+                    </div>
+                    <div id="upiIdForm">
+                      <label style="font-size:12px; color:var(--text-muted); margin-bottom:6px; display:block;">Enter UPI ID / VPA</label>
+                      <div class="upi-inline-form">
+                        <input type="text" id="upiIdInput" placeholder="mobileNumber@upi or name@okhdfcbank" value="user@okhdfcbank">
+                        <button type="button" class="btn btn-ghost" id="verifyUpiBtn" style="padding:0 16px; font-size:12px;">Verify</button>
+                      </div>
+                      <div class="upi-verify-badge" id="upiVerifyBadge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>
+                        <span>Verified Account (TechNest Secure Pay)</span>
+                      </div>
+                    </div>
+                    <div id="upiQrForm" style="display:none;">
+                      <div class="qr-container">
+                        <svg width="120" height="120" viewBox="0 0 100 100" fill="none" style="margin:0 auto; display:block; background:#fff; padding:8px; border-radius:8px;">
+                          <!-- Simulated stylized QR code -->
+                          <rect width="100" height="100" fill="#ffffff"/>
+                          <rect x="10" y="10" width="28" height="28" fill="#000000"/>
+                          <rect x="14" y="14" width="20" height="20" fill="#ffffff"/>
+                          <rect x="18" y="18" width="12" height="12" fill="#000000"/>
+                          <rect x="62" y="10" width="28" height="28" fill="#000000"/>
+                          <rect x="66" y="14" width="20" height="20" fill="#ffffff"/>
+                          <rect x="70" y="18" width="12" height="12" fill="#000000"/>
+                          <rect x="10" y="62" width="28" height="28" fill="#000000"/>
+                          <rect x="14" y="66" width="20" height="20" fill="#ffffff"/>
+                          <rect x="18" y="70" width="12" height="12" fill="#000000"/>
+                          <rect x="44" y="14" width="8" height="8" fill="#000000"/>
+                          <rect x="44" y="30" width="8" height="18" fill="#000000"/>
+                          <rect x="14" y="44" width="18" height="8" fill="#000000"/>
+                          <rect x="62" y="44" width="24" height="8" fill="#000000"/>
+                          <rect x="44" y="62" width="8" height="24" fill="#000000"/>
+                          <rect x="62" y="62" width="12" height="12" fill="#000000"/>
+                          <rect x="80" y="76" width="10" height="10" fill="#000000"/>
+                        </svg>
+                        <p style="font-size:12.5px; color:var(--text); margin-top:8px; font-weight:600;">Scan with any UPI app to pay</p>
+                        <span style="font-size:11px; color:var(--text-faint); font-family:'IBM Plex Mono', monospace;">QR code active for 10:00</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Option 2: Credit/Debit Card -->
+                <div class="payment-option" data-method="card">
+                  <div class="payment-header" onclick="selectPaymentMethod('card')">
+                    <div class="payment-header-left">
+                      <div class="payment-radio"></div>
+                      <div>
+                        <div class="payment-title">Credit or Debit Card</div>
+                        <div class="payment-sub">Visa, Mastercard, RuPay, Maestro, Diners</div>
+                      </div>
+                    </div>
+                    <div class="payment-icon-group">
+                      <span class="card-brand-tag">VISA</span>
+                      <span class="card-brand-tag">MC</span>
+                      <span class="card-brand-tag">RuPay</span>
+                    </div>
+                  </div>
+                  <div class="payment-subpanel">
+                    <div class="addr-grid">
+                      <div class="field full-w">
+                        <label for="cardNumInput">Card Number</label>
+                        <input type="text" id="cardNumInput" placeholder="4532 •••• •••• 8920" maxlength="19">
+                      </div>
+                      <div class="field full-w">
+                        <label for="cardHolderInput">Name on Card</label>
+                        <input type="text" id="cardHolderInput" placeholder="Name as printed on card">
+                      </div>
+                      <div class="field">
+                        <label for="cardExpInput">Valid Thru (MM/YY)</label>
+                        <input type="text" id="cardExpInput" placeholder="08/29" maxlength="5">
+                      </div>
+                      <div class="field">
+                        <label for="cardCvvInput">CVV (3 Digits)</label>
+                        <input type="password" id="cardCvvInput" placeholder="•••" maxlength="4">
+                      </div>
+                    </div>
+                    <div style="font-size:11px; color:var(--text-faint); margin-top:4px; display:flex; align-items:center; gap:6px;">
+                      🔒 Card details are encrypted with 256-bit bank grade security (RBI Tokenized).
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Option 3: Net Banking -->
+                <div class="payment-option" data-method="netbanking">
+                  <div class="payment-header" onclick="selectPaymentMethod('netbanking')">
+                    <div class="payment-header-left">
+                      <div class="payment-radio"></div>
+                      <div>
+                        <div class="payment-title">Net Banking</div>
+                        <div class="payment-sub">All major Indian banks supported</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="payment-subpanel">
+                    <div class="bank-grid">
+                      <div class="bank-btn active" data-bank="HDFC">HDFC Bank</div>
+                      <div class="bank-btn" data-bank="ICICI">ICICI Bank</div>
+                      <div class="bank-btn" data-bank="SBI">SBI</div>
+                      <div class="bank-btn" data-bank="Axis">Axis Bank</div>
+                      <div class="bank-btn" data-bank="Kotak">Kotak Bank</div>
+                      <div class="bank-btn" data-bank="Airtel">Airtel Payments</div>
+                    </div>
+                    <div class="field" style="margin-bottom:0;">
+                      <select id="otherBanksSelect">
+                        <option value="">Or select from other banks...</option>
+                        <option value="Bank of Baroda">Bank of Baroda</option>
+                        <option value="Canara Bank">Canara Bank</option>
+                        <option value="Punjab National Bank">Punjab National Bank</option>
+                        <option value="Union Bank of India">Union Bank of India</option>
+                        <option value="IndusInd Bank">IndusInd Bank</option>
+                        <option value="Federal Bank">Federal Bank</option>
+                        <option value="IDFC FIRST Bank">IDFC FIRST Bank</option>
+                        <option value="Yes Bank">Yes Bank</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Option 4: Cash on Delivery (COD) -->
+                <div class="payment-option" data-method="cod">
+                  <div class="payment-header" onclick="selectPaymentMethod('cod')">
+                    <div class="payment-header-left">
+                      <div class="payment-radio"></div>
+                      <div>
+                        <div class="payment-title">
+                          Cash on Delivery (COD)
+                          <span class="checkout-badge" style="background:rgba(74,222,128,0.15); color:var(--good);">NO ADVANCE PAYMENT</span>
+                        </div>
+                        <div class="payment-sub">Pay in cash or UPI to delivery executive at your doorstep</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="payment-subpanel">
+                    <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px;">
+                      Please keep exact cash or pay via UPI QR code directly to the courier executive upon delivery.
+                    </p>
+                    <label style="font-size:12px; color:var(--text-muted); display:block;">Enter verification code to confirm COD order:</label>
+                    <div class="cod-captcha-wrap">
+                      <div class="cod-captcha-code" id="codCaptchaDisplay">7492</div>
+                      <input type="text" id="codCaptchaInput" placeholder="Enter code" style="width:130px; font-family:'IBM Plex Mono', monospace; font-size:15px; font-weight:700; text-align:center;" maxlength="4">
+                      <button type="button" class="btn btn-ghost" id="refreshCaptchaBtn" title="Refresh code" style="padding:8px 12px; font-size:12px;">↻ New</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Option 5: No Cost EMI -->
+                <div class="payment-option" data-method="emi">
+                  <div class="payment-header" onclick="selectPaymentMethod('emi')">
+                    <div class="payment-header-left">
+                      <div class="payment-radio"></div>
+                      <div>
+                        <div class="payment-title">
+                          EMI / Pay Later
+                          <span class="checkout-badge" style="background:var(--coral-soft); color:var(--coral);">NO COST EMI</span>
+                        </div>
+                        <div class="payment-sub">Easy monthly installments on credit/debit cards</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="payment-subpanel">
+                    <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">
+                      Enjoy 3 to 12 months No Cost EMI across all major banks. Available for orders above ₹3,000.
+                      <div style="margin-top:8px; padding:10px; background:var(--bg-alt); border-radius:8px; border:1px solid var(--border);">
+                        ✨ Selected Plan: <strong>3 Months @ 0% Interest</strong> (No processing fee)
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Order Summary -->
+        <div class="cart-summary" id="cartSummary">
+          <h3 id="summaryTitle">Order summary</h3>
+          
+          <!-- Items Mini List on summary -->
+          <div id="summaryItemsList" style="display:none; margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--border);"></div>
+
+          <div class="summary-row"><span>Subtotal</span><span class="val" id="sumSubtotal">₹0</span></div>
+          <div class="summary-row"><span>Shipping</span><span class="val" id="sumShipping">₹0</span></div>
+          <div class="summary-row" id="sumDiscountRow" style="display:none;"><span>Promo discount</span><span class="val" id="sumDiscount">−₹0</span></div>
+          <div class="summary-row total"><span>Total Payable</span><span class="val" id="sumTotal">₹0</span></div>
+          
+          <div class="promo-row" id="promoRow">
+            <input type="text" id="promoInput" placeholder="Promo code (e.g. NEST10)">
+            <button type="button" id="promoBtn">Apply</button>
+          </div>
+
+          <!-- Dynamic Action Buttons depending on Step -->
+          <button class="btn btn-primary" id="mainCheckoutBtn">Proceed to Address →</button>
+          <button class="btn btn-ghost" id="backStepBtn" style="width:100%; margin-top:8px; display:none;">← Back</button>
+
+          <div class="cart-note" id="freeShipNote">Free express shipping automatically applied over ₹4,999</div>
+
+          <!-- Trust Badges -->
+          <div class="checkout-trust-badges">
+            <div class="checkout-trust-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--good);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>100% Genuine electronics with 2-Year warranty</span>
+            </div>
+            <div class="checkout-trust-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--cyan);"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span>Bank-grade 256-bit encrypted checkout</span>
+            </div>
+            <div class="checkout-trust-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--coral);"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              <span>30-Day hassle-free doorstep returns</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Empty Cart State -->
+      <div class="empty-state" id="cartEmpty" style="display:none;">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="21" r="1.4"/><circle cx="19" cy="21" r="1.4"/><path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21.5 8H6"/></svg>
+        <h4>Your cart is empty</h4>
+        <p>Add a few gadgets from the shop and they'll show up here.</p>
+        <a href="shop.html" class="btn btn-primary">Browse the shop</a>
+      </div>
+
+      <!-- Order Confirmed State (Rich Success Screen) -->
+      <div id="orderPlaced" style="display:none;" class="order-success-wrap">
+        <div class="order-success-hero">
+          <div class="order-check-icon">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <span class="eyebrow" style="color:var(--good);">THANK YOU FOR YOUR PURCHASE</span>
+          <h2 style="font-size:28px; margin:6px 0 10px;">Order Successfully Placed!</h2>
+          <p style="color:var(--text-muted); font-size:14px; max-width:560px; margin:0 auto;">
+            We've received your order and our logistics team is preparing it for rapid dispatch. A confirmation notification has been queued.
+          </p>
+
+          <div class="order-id-tag">
+            <span>Order ID: <strong id="confirmedOrderNum">TN-748291</strong></span>
+            <button type="button" class="copy-id-btn" id="copyOrderBtn" title="Copy Order ID">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+
+          <!-- Order Status Timeline -->
+          <div class="order-timeline">
+            <div class="ot-step done">
+              <div class="ot-step-dot"></div>
+              <div class="ot-step-title">Order Confirmed</div>
+              <div class="ot-step-sub" id="otDatePlaced">Today</div>
+            </div>
+            <div class="ot-step active">
+              <div class="ot-step-dot"></div>
+              <div class="ot-step-title">Processing</div>
+              <div class="ot-step-sub">Warehouse Bengaluru</div>
+            </div>
+            <div class="ot-step">
+              <div class="ot-step-dot"></div>
+              <div class="ot-step-title">Shipped</div>
+              <div class="ot-step-sub">Bluedart Express</div>
+            </div>
+            <div class="ot-step">
+              <div class="ot-step-dot"></div>
+              <div class="ot-step-title">Expected Delivery</div>
+              <div class="ot-step-sub" id="otDateDelivery">2-3 Business Days</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Details Recaps -->
+        <div class="order-details-grid">
+          <div class="order-detail-card">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              Delivery Address
+            </h4>
+            <p><strong id="confirmedName">Rahul Sharma</strong> (<span id="confirmedType">HOME</span>)</p>
+            <p id="confirmedStreet">Flat 402, Nest Orchid, 14th Main Road</p>
+            <p id="confirmedCity">Bengaluru, Karnataka - 560102</p>
+            <p id="confirmedPhone" style="font-family:'IBM Plex Mono', monospace; font-size:12px; margin-top:6px; color:var(--text);">Phone: +91 98765 43210</p>
+          </div>
+
+          <div class="order-detail-card">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              Payment & Invoice
+            </h4>
+            <p>Payment Mode: <strong id="confirmedPaymentMode">UPI (user@okhdfcbank)</strong></p>
+            <p>Payment Status: <span style="color:var(--good); font-weight:700;" id="confirmedPaymentStatus">Paid / Verified</span></p>
+            <p>Total Paid: <strong id="confirmedTotal" style="font-family:'IBM Plex Mono', monospace; color:var(--cyan);">₹0</strong></p>
+            <p style="font-size:12px; color:var(--text-faint); margin-top:6px;">2-Year warranty registered to order ID.</p>
+          </div>
+        </div>
+
+        <!-- Ordered Items Summary Table -->
+        <div class="order-items-card">
+          <h4>Items in this order</h4>
+          <div id="confirmedItemsList"></div>
+        </div>
+
+        <!-- Order Success CTA Buttons -->
+        <div class="order-cta-row">
+          <a href="#" id="trackOrderBtn" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            Track Order Status
+          </a>
+          <button type="button" class="btn btn-ghost" onclick="window.print()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Print Receipt / Invoice
+          </button>
+          <a href="shop.html" class="btn btn-ghost">Continue Shopping</a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+            <path d="M5 15 L16 5 L27 15" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 13 V27 H23 V13" stroke="#35d0dd" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="21" r="3" fill="#ff7a7a"/>
+          </svg>
+          Tech<span>Nest</span>
+        </a>
+        <p>Your home for smart electronics — thoughtfully sourced gadgets, honest pricing, and support that sticks around after the sale.</p>
+        <div class="social-row">
+          <a href="#" aria-label="Twitter/X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 3H22l-7.6 8.7L23 21h-6.9l-5.4-6.6L4.5 21H1.3l8.1-9.3L1 3h7l4.9 6.1L18.9 3Z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l6 3-6 3V9Z" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="shop.html?cat=phones">Phones</a></li>
+          <li><a href="shop.html?cat=computing">Computing</a></li>
+          <li><a href="shop.html?cat=audio">Audio</a></li>
+          <li><a href="shop.html?cat=wearables">Wearables</a></li>
+          <li><a href="shop.html?cat=home">Smart Home</a></li>
+          <li><a href="shop.html?cat=gaming">Gaming</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Support</h5>
+        <ul>
+          <li><a href="contact.html">Track Order</a></li>
+          <li><a href="contact.html">Returns</a></li>
+          <li><a href="contact.html">Warranty</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About TechNest</a></li>
+          <li><a href="about.html#careers">Careers</a></li>
+          <li><a href="about.html">Press</a></li>
+          <li><a href="about.html">Blog</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 TechNest. All rights reserved.</span>
+      <div>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>
+  <span id="toastMsg">Added to cart</span>
+</div>
+
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script src="cart.js"></script>
+
+</body>
+</html>

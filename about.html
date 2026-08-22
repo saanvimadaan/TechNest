@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About TechNest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<script>if(localStorage.getItem('technest_theme')==='light')document.body.classList.add('light-mode');</script>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="index.html" class="logo">
+        <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+          <path d="M5 15 L16 5 L27 15" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 13 V27 H23 V13" stroke="#35d0dd" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="16" cy="21" r="3" fill="#ff7a7a"/>
+        </svg>
+        <span class="logo-text">Tech<span>Nest</span></span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li class="mobile-search">
+          <div class="search-box">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input type="text" placeholder="Search electronics...">
+          </div>
+        </li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="index.html#trending">Deals</a></li>
+        <li><a href="index.html#categories">Categories</a></li>
+        <li><a href="contact.html">Support</a></li>
+        <li><a href="about.html" style="color:var(--text)">About</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <div class="search-box">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="text" placeholder="Search electronics...">
+        </div>
+        <button class="icon-btn" aria-label="Wishlist" id="navWish">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+          <span class="cart-count" id="wishCount">0</span>
+        </button>
+        <a href="cart.html" class="icon-btn" aria-label="Cart" id="navCart">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="21" r="1.4"/><circle cx="19" cy="21" r="1.4"/><path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21.5 8H6"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+        <a href="login.html" class="icon-btn" aria-label="Account">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        </a>
+        <button class="icon-btn theme-toggle" aria-label="Toggle light mode" id="themeToggle">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </button>
+        <button class="burger icon-btn" aria-label="Menu" aria-expanded="false" aria-controls="navLinks" id="burgerBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>About</span></div>
+      <span class="eyebrow">WHO WE ARE</span>
+      <h1>Tech should feel like <span class="grad">it belongs at home.</span></h1>
+      <p>TechNest started because we were tired of choosing between good gadgets and good service. So we built a place that does both, and we've kept it that way since.</p>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="section" style="padding-bottom:24px;">
+    <div class="wrap">
+      <div class="stats-row reveal">
+        <div class="stat-card"><div class="stat-num">2019</div><div class="stat-lbl">Founded</div></div>
+        <div class="stat-card"><div class="stat-num">240K+</div><div class="stat-lbl">Orders shipped</div></div>
+        <div class="stat-card"><div class="stat-num">4.7★</div><div class="stat-lbl">Avg. customer rating</div></div>
+        <div class="stat-card"><div class="stat-num">18</div><div class="stat-lbl">Cities with same-day delivery</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="section">
+    <div class="wrap">
+      <div class="story-grid">
+        <div class="photo reveal"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=900&auto=format&fit=crop" alt="Small team working at a desk with electronics"></div>
+        <div class="reveal">
+          <span class="eyebrow">THE SHORT VERSION</span>
+          <h2 style="margin:10px 0 18px;">Built by three people annoyed with return policies</h2>
+          <p>TechNest began in a two-bedroom flat with a spreadsheet, a stack of returned earbuds, and a shared frustration: every electronics store made warranty claims feel like a punishment for buying something that broke.</p>
+          <p>We started small — curating a tight list of products we'd actually vouch for, and answering support emails ourselves. That habit stuck. Every device on TechNest today still goes through the same filter: would we tell a friend to buy this?</p>
+          <p>We're still not the biggest catalog in electronics, and we're fine with that. We'd rather be the one you trust.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">HOW WE GOT HERE</span>
+          <h2>A few milestones</h2>
+        </div>
+      </div>
+      <div class="timeline reveal">
+        <div class="timeline-item">
+          <div class="timeline-year">2019</div>
+          <h4>TechNest opens with 40 products</h4>
+          <p>Just audio and wearables at first — categories we understood well enough to stand behind.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2021</div>
+          <h4>Launched the 2-year no-questions warranty</h4>
+          <p>Our support inbox told us exactly what shoppers didn't trust about buying electronics online. We fixed that first.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2023</div>
+          <h4>Crossed 200,000 orders shipped</h4>
+          <p>Expanded into computing and smart home, and opened same-day delivery in our first six cities.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2026</div>
+          <h4>Still answering our own support line</h4>
+          <p>Bigger team now, same rule: a real person picks up, seven days a week.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">WHAT WE WON'T COMPROMISE ON</span>
+          <h2>The rules we built the store around</h2>
+        </div>
+      </div>
+      <div class="value-grid">
+        <div class="feat-card reveal">
+          <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg></div>
+          <h4>Honest warranty, always</h4>
+          <p>No fine print designed to get us out of a claim. If it's covered, it's covered.</p>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22a10 10 0 1 0-10-10c0 2 .6 3.9 1.6 5.5L2 22l4.7-1.5A9.96 9.96 0 0 0 12 22Z"/></svg></div>
+          <h4>A human on the other end</h4>
+          <p>Every support ticket is read by a person who's allowed to actually solve your problem.</p>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+          <h4>Curated, not crammed</h4>
+          <p>We'd rather stock 200 products we trust than 20,000 we haven't tested.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="section" id="careers">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">THE PEOPLE</span>
+          <h2>A small team, on purpose</h2>
+        </div>
+        <p>We're hiring for support and logistics roles — reach out if that sounds like you.</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card reveal">
+          <div class="photo"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop" alt="Team member portrait"></div>
+          <h5>Ananya Rao</h5>
+          <span>Co-founder, Product</span>
+        </div>
+        <div class="team-card reveal">
+          <div class="photo"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop" alt="Team member portrait"></div>
+          <h5>Dev Malhotra</h5>
+          <span>Co-founder, Operations</span>
+        </div>
+        <div class="team-card reveal">
+          <div class="photo"><img src="https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?q=80&w=400&auto=format&fit=crop" alt="Team member portrait"></div>
+          <h5>Priya Nair</h5>
+          <span>Head of Support</span>
+        </div>
+        <div class="team-card reveal">
+          <div class="photo"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=400&auto=format&fit=crop" alt="Team member portrait"></div>
+          <h5>Rohan Iyer</h5>
+          <span>Logistics Lead</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="padding-top:0;">
+    <div class="wrap">
+      <div class="news-box reveal">
+        <span class="eyebrow">SEE IT FOR YOURSELF</span>
+        <h2>Take a look at what we sell</h2>
+        <p>Every product on TechNest is one we'd be happy to own ourselves.</p>
+        <div class="center-cta" style="margin-top:8px;">
+          <a href="shop.html" class="btn btn-primary">Browse the shop</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+            <path d="M5 15 L16 5 L27 15" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 13 V27 H23 V13" stroke="#35d0dd" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="21" r="3" fill="#ff7a7a"/>
+          </svg>
+          Tech<span>Nest</span>
+        </a>
+        <p>Your home for smart electronics — thoughtfully sourced gadgets, honest pricing, and support that sticks around after the sale.</p>
+        <div class="social-row">
+          <a href="#" aria-label="Twitter/X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 3H22l-7.6 8.7L23 21h-6.9l-5.4-6.6L4.5 21H1.3l8.1-9.3L1 3h7l4.9 6.1L18.9 3Z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l6 3-6 3V9Z" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="shop.html?cat=phones">Phones</a></li>
+          <li><a href="shop.html?cat=computing">Computing</a></li>
+          <li><a href="shop.html?cat=audio">Audio</a></li>
+          <li><a href="shop.html?cat=wearables">Wearables</a></li>
+          <li><a href="shop.html?cat=home">Smart Home</a></li>
+          <li><a href="shop.html?cat=gaming">Gaming</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Support</h5>
+        <ul>
+          <li><a href="contact.html">Track Order</a></li>
+          <li><a href="contact.html">Returns</a></li>
+          <li><a href="contact.html">Warranty</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About TechNest</a></li>
+          <li><a href="about.html#careers">Careers</a></li>
+          <li><a href="about.html">Press</a></li>
+          <li><a href="about.html">Blog</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 TechNest. All rights reserved.</span>
+      <div>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>
+  <span id="toastMsg">Added to cart</span>
+</div>
+
+<script src="data.js"></script>
+<script src="common.js"></script>
+
+</body>
+</html>
