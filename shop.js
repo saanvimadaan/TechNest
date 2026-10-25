@@ -53,10 +53,32 @@ function wireCard(card, p, isWishlistContainer = false){
   const addBtn = card.querySelector('.add-btn');
   if(addBtn){
     addBtn.addEventListener('click', () => {
-      addToCart(p.id, 1);
-      showToast(`${p.name} added to cart`);
-      const cartBtn = document.getElementById('navCart');
-      if(cartBtn){ cartBtn.classList.remove('bump'); void cartBtn.offsetWidth; cartBtn.classList.add('bump'); }
+      // Visible Promise demonstration: pending -> fulfilled/rejected.
+      const originalHTML = addBtn.innerHTML;
+      addBtn.disabled = true;
+      addBtn.setAttribute('aria-label', `Adding ${p.name} to cart`);
+      addBtn.innerHTML = '<span style="font-size:10px;font-weight:700;white-space:nowrap;">Wait...</span>';
+      showToast(`PROMISE PENDING: Adding ${p.name}...`);
+
+      addToCartWithPromise(p.id, 1)
+        .then(() => {
+          showToast(`PROMISE FULFILLED: ${p.name} added to cart`);
+          addBtn.innerHTML = '<span style="font-size:10px;font-weight:700;white-space:nowrap;">Added!</span>';
+          addBtn.setAttribute('aria-label', `${p.name} added to cart`);
+          const cartBtn = document.getElementById('navCart');
+          if(cartBtn){ cartBtn.classList.remove('bump'); void cartBtn.offsetWidth; cartBtn.classList.add('bump'); }
+        })
+        .catch((error) => {
+          showToast('PROMISE REJECTED: Unable to add product');
+          console.error('Promise cart error:', error);
+        })
+        .finally(() => {
+          setTimeout(() => {
+            addBtn.disabled = false;
+            addBtn.innerHTML = originalHTML;
+            addBtn.setAttribute('aria-label', 'Add to cart');
+          }, 900);
+        });
     });
   }
 }

@@ -88,7 +88,7 @@
           <input type="password" id="liPass" placeholder="••••••••" required minlength="6">
         </div>
         <div class="auth-meta">
-          <label class="check-row"><input type="checkbox" checked> Remember me</label>
+          <label class="check-row"><input type="checkbox" id="liRemember" checked> Remember me</label>
           <a href="#" id="forgotPassLink">Forgot password?</a>
         </div>
         <button type="submit" class="btn btn-primary">Log in</button>
@@ -129,30 +129,31 @@
       <div class="auth-foot" id="authFootSignup" style="display:none;">Already have an account? <a href="#" data-switch="loginForm">Log in</a></div>
     </div>
 
-    <!-- PROFILE DASHBOARD CARD (when logged in) -->
-    <div class="auth-card reveal" id="profileCard" style="display:none; max-width:480px;">
-      <div style="text-align:center; margin-bottom:24px;">
-        <div id="profileAvatar" style="width:72px; height:72px; border-radius:50%; background:linear-gradient(135deg, var(--violet), var(--cyan)); color:#fff; font-size:28px; font-weight:800; font-family:'Syne', sans-serif; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; box-shadow:0 0 20px var(--violet-glow);">U</div>
-        <h2 id="profileName" style="font-size:22px; margin-bottom:4px;">User Name</h2>
-        <span id="profileEmail" style="font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--text-muted);">user@email.com</span>
-        <div style="margin-top:8px;"><span style="font-family:'IBM Plex Mono', monospace; font-size:11px; padding:4px 10px; border-radius:999px; background:var(--cyan-soft); color:var(--cyan); font-weight:700;">★ VERIFIED MEMBER</span></div>
+    <!-- PROFILE DASHBOARD (when logged in) -->
+    <div class="auth-card profile-card reveal" id="profileCard" style="display:none;">
+      <div class="pf-head">
+        <div class="pf-avatar" id="profileAvatar">U</div>
+        <h2 id="profileName">User Name</h2>
+        <span class="pf-email" id="profileEmail">user@email.com</span>
+        <div><span class="pf-badge" id="profileSince">MEMBER</span></div>
       </div>
 
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px;">
-        <a href="cart.html" style="background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center; transition:border-color .2s;">
-          <div style="font-family:'IBM Plex Mono', monospace; font-size:20px; font-weight:700; color:var(--coral);" id="dashCartCount">0</div>
-          <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">In Cart</div>
-        </a>
-        <a href="shop.html#wishlist" style="background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center; transition:border-color .2s;">
-          <div style="font-family:'IBM Plex Mono', monospace; font-size:20px; font-weight:700; color:var(--cyan);" id="dashWishCount">0</div>
-          <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">Wishlist</div>
-        </a>
+      <div class="pf-stats">
+        <a href="cart.html" class="pf-stat"><div class="pf-stat-num" id="dashCartCount" style="color:var(--coral);">0</div><div class="pf-stat-label">In Cart</div></a>
+        <a href="shop.html#wishlist" class="pf-stat"><div class="pf-stat-num" id="dashWishCount" style="color:var(--cyan);">0</div><div class="pf-stat-label">Wishlist</div></a>
+        <a href="#orderHistory" class="pf-stat"><div class="pf-stat-num" id="dashOrderCount" style="color:var(--violet);">0</div><div class="pf-stat-label">Orders</div></a>
       </div>
 
-      <div style="display:flex; flex-direction:column; gap:10px;">
-        <a href="shop.html" class="btn btn-primary" style="width:100%;">Browse Store</a>
-        <a href="contact.html" class="btn btn-ghost" style="width:100%;">Contact Support</a>
-        <button type="button" class="btn btn-ghost" id="logoutBtn" style="width:100%; border-color:rgba(255,122,122,0.3); color:var(--coral); margin-top:4px;">Sign Out</button>
+      <h3 class="pf-section-title">Saved delivery address</h3>
+      <div class="pf-box" id="profileAddress"></div>
+
+      <h3 class="pf-section-title" id="orderHistoryTitle">Order history</h3>
+      <div id="orderHistory"></div>
+
+      <div class="pf-actions">
+        <a href="shop.html" class="btn btn-primary">Browse Store</a>
+        <a href="contact.html" class="btn btn-ghost">Contact Support</a>
+        <button type="button" class="btn btn-ghost pf-signout" id="logoutBtn">Sign Out</button>
       </div>
     </div>
 
@@ -231,6 +232,10 @@
   const profileCard = document.getElementById('profileCard');
   const authAlert = document.getElementById('authAlert');
 
+  // Only allow redirecting back to a plain page on this site (e.g. cart.html)
+  const nextParam = new URLSearchParams(window.location.search).get('next');
+  const nextPage = /^[\w-]+\.html$/.test(nextParam || '') ? nextParam : null;
+
   function showAlert(msg, isError = true){
     authAlert.textContent = msg;
     authAlert.style.display = 'block';
@@ -238,8 +243,80 @@
     authAlert.style.color = isError ? 'var(--coral)' : 'var(--good)';
     authAlert.style.border = `1px solid ${isError ? 'rgba(255,122,122,0.3)' : 'rgba(74,222,128,0.3)'}`;
   }
-  function hideAlert(){
-    authAlert.style.display = 'none';
+  function hideAlert(){ authAlert.style.display = 'none'; }
+
+  function afterAuth(message){
+    showToast(message);
+    if(nextPage){
+      setTimeout(() => { window.location.href = nextPage; }, 700);
+    } else {
+      renderAuthState();
+    }
+  }
+
+  // ----- Profile rendering -----
+  function renderAddress(){
+    const box = document.getElementById('profileAddress');
+    const a = getSavedAddress();
+    if(!a){
+      box.innerHTML = `<p class="pf-empty">No saved address yet. Tick “Save this address” at checkout and it will appear here.</p>`;
+      return;
+    }
+    box.innerHTML = `
+      <div class="pf-addr-top"><strong>${escapeHTML(a.fullName)}</strong><span class="pf-pill">${escapeHTML((a.type || 'Home').toUpperCase())}</span></div>
+      <div>${escapeHTML(a.street)}${a.landmark ? ', ' + escapeHTML(a.landmark) : ''}</div>
+      <div>${escapeHTML(a.city)}, ${escapeHTML(a.state)} - ${escapeHTML(a.pin)}</div>
+      <div class="pf-muted">Phone: +91 ${escapeHTML(a.phone)}</div>
+      <button type="button" class="pf-link-btn" id="removeAddrBtn">Remove saved address</button>`;
+    document.getElementById('removeAddrBtn').addEventListener('click', () => {
+      clearSavedAddress();
+      showToast('Saved address removed');
+      renderAddress();
+    });
+  }
+
+  function renderOrders(){
+    const wrap = document.getElementById('orderHistory');
+    const orders = getUserOrders();
+    document.getElementById('dashOrderCount').textContent = orders.length;
+    if(!orders.length){
+      wrap.innerHTML = `<div class="pf-box"><p class="pf-empty">You haven’t placed any orders yet. <a href="shop.html" style="color:var(--cyan);">Start shopping →</a></p></div>`;
+      return;
+    }
+    wrap.innerHTML = orders.map(o => {
+      const st = getOrderStatus(o);
+      const addr = o.address || {};
+      return `
+      <details class="pf-order">
+        <summary>
+          <span class="pf-order-id">${escapeHTML(o.orderId)}</span>
+          <span class="pf-order-date">${escapeHTML(o.datePlaced)}</span>
+          <span class="pf-pill pf-status-${st.step}">${escapeHTML(st.label)}</span>
+          <span class="pf-order-total">₹${formatINR(o.total)}</span>
+        </summary>
+        <div class="pf-order-body">
+          <div class="pf-track">${st.steps.map((label, i) => `<div class="pf-track-step${i < st.step ? ' done' : ''}"><span></span>${escapeHTML(label)}</div>`).join('')}</div>
+          ${(o.items || []).map(it => `
+            <div class="pf-item">
+              <img src="${escapeHTML(it.photo)}" alt="${escapeHTML(it.name)}">
+              <div class="pf-item-info"><div>${escapeHTML(it.name)}</div><div class="pf-muted">Qty ${Number(it.qty)} × ₹${formatINR(it.price)}</div></div>
+              <div>₹${formatINR(it.price * it.qty)}</div>
+            </div>`).join('')}
+          <div class="pf-sums">
+            <div><span>Subtotal</span><span>₹${formatINR(o.subtotal)}</span></div>
+            <div><span>Shipping</span><span>${o.shipping ? '₹' + formatINR(o.shipping) : 'Free'}</span></div>
+            ${o.discount ? `<div><span>Discount</span><span>−₹${formatINR(o.discount)}</span></div>` : ''}
+            <div class="pf-sum-total"><span>Total</span><span>₹${formatINR(o.total)}</span></div>
+          </div>
+          <div class="pf-order-meta">
+            <div><strong>Deliver to:</strong> ${escapeHTML(addr.fullName)}, ${escapeHTML(addr.street)}, ${escapeHTML(addr.city)} - ${escapeHTML(addr.pin)}</div>
+            <div><strong>Payment:</strong> ${escapeHTML(o.payment && o.payment.method)} · ${escapeHTML(o.payment && o.payment.status)}</div>
+            <div><strong>Estimated delivery:</strong> ${escapeHTML(o.estimatedDelivery)}</div>
+          </div>
+          <a class="btn btn-ghost pf-track-btn" href="contact.html?order=${encodeURIComponent(o.orderId)}">Track / get help with this order</a>
+        </div>
+      </details>`;
+    }).join('');
   }
 
   function renderAuthState(){
@@ -250,8 +327,11 @@
       document.getElementById('profileName').textContent = user.name;
       document.getElementById('profileEmail').textContent = user.email;
       document.getElementById('profileAvatar').textContent = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+      document.getElementById('profileSince').textContent = 'MEMBER SINCE ' + (user.joinedAt || '').toUpperCase();
       document.getElementById('dashCartCount').textContent = cartCount();
       document.getElementById('dashWishCount').textContent = getWishlist().length;
+      renderAddress();
+      renderOrders();
     } else {
       authCard.style.display = 'block';
       profileCard.style.display = 'none';
@@ -265,72 +345,69 @@
     document.getElementById('authFootLogin').style.display = formId === 'loginForm' ? '' : 'none';
     document.getElementById('authFootSignup').style.display = formId === 'signupForm' ? '' : 'none';
   }
-  document.querySelectorAll('.auth-tab').forEach(tab => {
-    tab.addEventListener('click', () => switchTo(tab.dataset.form));
-  });
+  document.querySelectorAll('.auth-tab').forEach(tab => tab.addEventListener('click', () => switchTo(tab.dataset.form)));
   document.querySelectorAll('[data-switch]').forEach(link => {
     link.addEventListener('click', (e) => { e.preventDefault(); switchTo(link.dataset.switch); });
   });
 
-  // Login submission
+  if(nextPage && !getAuthUser()) showAlert('Please log in or create an account to continue.', false);
+
+  // Login
   document.getElementById('loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
     hideAlert();
-    const email = document.getElementById('liEmail').value.trim();
+    const email = document.getElementById('liEmail').value;
     const pass = document.getElementById('liPass').value;
-
-    const res = authenticateUser(email, pass);
+    const remember = document.getElementById('liRemember').checked;
+    const res = authenticateUser(email, pass, remember);
     if(res.success){
-      showToast(`Welcome back, ${res.user.name}!`);
-      renderAuthState();
+      e.target.reset();
+      document.getElementById('liRemember').checked = true;
+      afterAuth(`Welcome back, ${res.user.name}!`);
     } else {
       showAlert(res.message, true);
     }
   });
 
-  // Signup submission
+  // Signup
   document.getElementById('signupForm').addEventListener('submit', (e) => {
     e.preventDefault();
     hideAlert();
-    const name = document.getElementById('suName').value.trim();
-    const email = document.getElementById('suEmail').value.trim();
+    const name = document.getElementById('suName').value;
+    const email = document.getElementById('suEmail').value;
     const pass = document.getElementById('suPass').value;
-
-    const res = registerUser(name, email, pass);
+    const res = registerUser(name, email, pass, true);
     if(res.success){
-      showToast(`Account created! Welcome, ${name.split(' ')[0]}`);
-      renderAuthState();
+      e.target.reset();
+      afterAuth(`Account created! Welcome, ${res.user.name.split(' ')[0]}`);
     } else {
       showAlert(res.message, true);
     }
   });
 
-  // Demo Social Logins
+  // Demo social logins (create a real local account record so orders attach to it)
   document.getElementById('googleAuth').addEventListener('click', () => {
-    const demoUser = { id: 'google_user', name: 'Google User', email: 'google.user@example.com', joinedAt: 'Aug 2026' };
-    setAuthUser(demoUser);
-    showToast('Signed in with Google Demo');
-    renderAuthState();
+    loginWithProvider('google');
+    afterAuth('Signed in with Google Demo');
   });
   document.getElementById('appleAuth').addEventListener('click', () => {
-    const demoUser = { id: 'apple_user', name: 'Apple User', email: 'apple.user@example.com', joinedAt: 'Aug 2026' };
-    setAuthUser(demoUser);
-    showToast('Signed in with Apple Demo');
-    renderAuthState();
+    loginWithProvider('apple');
+    afterAuth('Signed in with Apple Demo');
   });
 
-  // Logout button
   document.getElementById('logoutBtn').addEventListener('click', () => {
     logoutUser();
     renderAuthState();
   });
 
-  // Forgot password demo
   document.getElementById('forgotPassLink').addEventListener('click', (e) => {
     e.preventDefault();
-    const email = document.getElementById('liEmail').value.trim() || 'your email';
-    showToast(`Password reset instructions sent to ${email}`);
+    const email = document.getElementById('liEmail').value.trim();
+    showToast(email ? `Password reset instructions sent to ${email}` : 'Enter your email above first');
   });
+
+  // Keep this page in sync if the user logs in/out in another tab
+  window.addEventListener('storage', renderAuthState);
 
   renderAuthState();
 </script>

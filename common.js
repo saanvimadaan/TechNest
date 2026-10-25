@@ -21,6 +21,20 @@ function addToCart(id, qty = 1){
   else cart.push({ id, qty });
   saveCart(cart);
 }
+
+// PROMISE DEMO: the cart operation visibly stays pending before it completes.
+function addToCartWithPromise(id, qty = 1){
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        addToCart(id, qty);
+        resolve(true);
+      } catch (error) {
+        reject(error);
+      }
+    }, 1800);
+  });
+}
 function setCartQty(id, qty){
   let cart = getCart();
   if(qty <= 0){ cart = cart.filter(l => l.id !== id); }
@@ -57,9 +71,79 @@ function toggleWishlist(id){
   return !wished;
 }
 
+// ---------- Helpers ----------
+function escapeHTML(str){
+  return String(str == null ? '' : str).replace(/[&<>"']/g, c => ({
+    '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+  }[c]));
+}
+
+// Small synchronous SHA-256 (pure JS, works on http, https and file://)
+function sha256(message){
+  const rotr = (v, n) => (v >>> n) | (v << (32 - n));
+  const bytes = Array.from(new TextEncoder().encode(message));
+  // Round constants / initial hash derived from primes (standard SHA-256 definition)
+  const primes = [];
+  for(let n = 2; primes.length < 64; n++){
+    if(primes.every(p => n % p !== 0)) primes.push(n);
+  }
+  const frac = x => Math.floor((x - Math.floor(x)) * 4294967296);
+  const K = primes.map(p => frac(Math.cbrt(p)));
+  let H = primes.slice(0, 8).map(p => frac(Math.sqrt(p)));
+
+  const bitLen = bytes.length * 8;
+  bytes.push(0x80);
+  while(bytes.length % 64 !== 56) bytes.push(0);
+  const hi = Math.floor(bitLen / 4294967296), lo = bitLen >>> 0;
+  for(let i = 3; i >= 0; i--) bytes.push((hi >>> (i * 8)) & 255);
+  for(let i = 3; i >= 0; i--) bytes.push((lo >>> (i * 8)) & 255);
+
+  for(let off = 0; off < bytes.length; off += 64){
+    const w = new Array(64);
+    for(let i = 0; i < 16; i++){
+      w[i] = (bytes[off+i*4] << 24) | (bytes[off+i*4+1] << 16) | (bytes[off+i*4+2] << 8) | bytes[off+i*4+3];
+    }
+    for(let i = 16; i < 64; i++){
+      const s0 = rotr(w[i-15], 7) ^ rotr(w[i-15], 18) ^ (w[i-15] >>> 3);
+      const s1 = rotr(w[i-2], 17) ^ rotr(w[i-2], 19) ^ (w[i-2] >>> 10);
+      w[i] = (w[i-16] + s0 + w[i-7] + s1) | 0;
+    }
+    let [a, b, c, d, e, f, g, h] = H;
+    for(let i = 0; i < 64; i++){
+      const S1 = rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25);
+      const ch = (e & f) ^ (~e & g);
+      const t1 = (h + S1 + ch + K[i] + w[i]) | 0;
+      const S0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22);
+      const maj = (a & b) ^ (a & c) ^ (b & c);
+      const t2 = (S0 + maj) | 0;
+      h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+    }
+    H = [H[0]+a|0, H[1]+b|0, H[2]+c|0, H[3]+d|0, H[4]+e|0, H[5]+f|0, H[6]+g|0, H[7]+h|0];
+  }
+  return H.map(x => (x >>> 0).toString(16).padStart(8, '0')).join('');
+}
+function makeSalt(){
+  try{
+    const arr = new Uint8Array(16);
+    crypto.getRandomValues(arr);
+    return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
+  }catch(e){
+    return Math.random().toString(16).slice(2) + Date.now().toString(16);
+  }
+}
+// Salted + repeated hashing so the real password is never stored.
+// NOTE: this is client-side only. A real production site must do this on a server.
+function hashPassword(password, salt){
+  let h = sha256(salt + ':' + password);
+  for(let i = 0; i < 2000; i++) h = sha256(h + salt);
+  return h;
+}
+
 // ---------- Auth ----------
 const AUTH_KEY = 'technest_auth_user';
 const USERS_KEY = 'technest_registered_users';
+const ORDERS_KEY = 'technest_orders';
+const ADDR_KEY_PREFIX = 'technest_saved_address_';
 
 function getRegisteredUsers(){
   try{ return JSON.parse(localStorage.getItem(USERS_KEY)) || []; }
@@ -68,57 +152,142 @@ function getRegisteredUsers(){
 function saveRegisteredUsers(users){
   localStorage.setItem(USERS_KEY, JSON.stringify(users));
 }
+// Session lives in localStorage when "Remember me" is on, otherwise in sessionStorage
 function getAuthUser(){
-  try{ return JSON.parse(localStorage.getItem(AUTH_KEY)) || null; }
-  catch(e){ return null; }
+  try{
+    const raw = localStorage.getItem(AUTH_KEY) || sessionStorage.getItem(AUTH_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null; }
 }
-function setAuthUser(user){
-  localStorage.setItem(AUTH_KEY, JSON.stringify(user));
+function setAuthUser(user, remember = true){
+  localStorage.removeItem(AUTH_KEY);
+  sessionStorage.removeItem(AUTH_KEY);
+  (remember ? localStorage : sessionStorage).setItem(AUTH_KEY, JSON.stringify(user));
   syncAuthUI();
 }
 function logoutUser(){
   localStorage.removeItem(AUTH_KEY);
+  sessionStorage.removeItem(AUTH_KEY);
   syncAuthUI();
   showToast('Logged out successfully');
 }
-function registerUser(name, email, password){
+function sessionFromUser(u){
+  return { id: u.id, name: u.name, email: u.email, joinedAt: u.joinedAt };
+}
+function registerUser(name, email, password, remember = true){
+  name = (name || '').trim();
+  const normalizedEmail = (email || '').trim().toLowerCase();
+  if(!name) return { success: false, message: 'Please enter your name.' };
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) return { success: false, message: 'Please enter a valid email address.' };
+  if(!password || password.length < 6) return { success: false, message: 'Password must be at least 6 characters.' };
+
   const users = getRegisteredUsers();
-  const normalizedEmail = email.trim().toLowerCase();
-  const existing = users.find(u => u.email.toLowerCase() === normalizedEmail);
-  if(existing){
-    return { success: false, message: 'An account with this email already exists.' };
+  if(users.find(u => u.email.toLowerCase() === normalizedEmail)){
+    return { success: false, message: 'An account with this email already exists. Try logging in.' };
   }
+  const salt = makeSalt();
   const newUser = {
-    id: 'user_' + Date.now(),
-    name: name.trim(),
+    id: 'user_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+    name,
     email: normalizedEmail,
-    password: password,
-    joinedAt: new Date().toLocaleDateString('en-US', { month:'short', year:'numeric' }),
-    orders: []
+    salt,
+    passHash: hashPassword(password, salt),
+    joinedAt: new Date().toLocaleDateString('en-US', { month:'short', year:'numeric' })
   };
   users.push(newUser);
   saveRegisteredUsers(users);
-  setAuthUser({ id: newUser.id, name: newUser.name, email: newUser.email, joinedAt: newUser.joinedAt });
-  return { success: true, user: newUser };
+  const session = sessionFromUser(newUser);
+  setAuthUser(session, remember);
+  return { success: true, user: session };
 }
-function authenticateUser(email, password){
+function authenticateUser(email, password, remember = true){
+  const normalizedEmail = (email || '').trim().toLowerCase();
+  const genericFail = { success: false, message: 'Invalid email or password.' };
   const users = getRegisteredUsers();
-  const normalizedEmail = email.trim().toLowerCase();
-  const user = users.find(u => u.email.toLowerCase() === normalizedEmail && u.password === password);
-  if(user){
-    const session = { id: user.id, name: user.name, email: user.email, joinedAt: user.joinedAt };
-    setAuthUser(session);
-    return { success: true, user: session };
+  const idx = users.findIndex(u => u.email.toLowerCase() === normalizedEmail);
+  if(idx === -1 || !password) return genericFail;
+  const user = users[idx];
+
+  let ok = false;
+  if(user.passHash && user.salt){
+    ok = hashPassword(password, user.salt) === user.passHash;
+  } else if(typeof user.password === 'string' && user.provider == null){
+    // Legacy account created by the old version (plain-text password): verify, then upgrade it
+    ok = user.password === password;
+    if(ok){
+      user.salt = makeSalt();
+      user.passHash = hashPassword(password, user.salt);
+      delete user.password;
+      delete user.orders;
+      users[idx] = user;
+      saveRegisteredUsers(users);
+    }
   }
-  // Demo fallback for instant ease-of-use if user types any demo email
-  if(password && password.length >= 6){
-    const demoName = normalizedEmail.split('@')[0];
-    const capitalized = demoName.charAt(0).toUpperCase() + demoName.slice(1);
-    const demoSession = { id: 'user_demo', name: capitalized || 'Technest User', email: normalizedEmail, joinedAt: 'Aug 2026' };
-    setAuthUser(demoSession);
-    return { success: true, user: demoSession };
+  if(!ok) return genericFail;
+
+  const session = sessionFromUser(user);
+  setAuthUser(session, remember);
+  return { success: true, user: session };
+}
+// Demo social sign-in: creates (or reuses) a real account record so orders/address attach to it
+function loginWithProvider(provider){
+  const name = provider === 'google' ? 'Google User' : 'Apple User';
+  const email = provider + '.user@example.com';
+  const users = getRegisteredUsers();
+  let user = users.find(u => u.email === email);
+  if(!user){
+    user = {
+      id: provider + '_user', name, email, provider,
+      joinedAt: new Date().toLocaleDateString('en-US', { month:'short', year:'numeric' })
+    };
+    users.push(user);
+    saveRegisteredUsers(users);
   }
-  return { success: false, message: 'Invalid email or password (min 6 chars).' };
+  const session = sessionFromUser(user);
+  setAuthUser(session, true);
+  return { success: true, user: session };
+}
+
+// ---------- Orders & saved address (always scoped to the logged-in account) ----------
+function getAllOrders(){
+  try{ return JSON.parse(localStorage.getItem(ORDERS_KEY)) || []; }
+  catch(e){ return []; }
+}
+function saveOrder(order){
+  const orders = getAllOrders();
+  orders.unshift(order);
+  localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+}
+function getUserOrders(){
+  const user = getAuthUser();
+  if(!user) return [];
+  return getAllOrders().filter(o => o.userId === user.id);
+}
+function getSavedAddress(){
+  const user = getAuthUser();
+  if(!user) return null;
+  try{ return JSON.parse(localStorage.getItem(ADDR_KEY_PREFIX + user.id)) || null; }
+  catch(e){ return null; }
+}
+function saveAddress(addr){
+  const user = getAuthUser();
+  if(user) localStorage.setItem(ADDR_KEY_PREFIX + user.id, JSON.stringify(addr));
+}
+function clearSavedAddress(){
+  const user = getAuthUser();
+  if(user) localStorage.removeItem(ADDR_KEY_PREFIX + user.id);
+}
+// Demo order tracking: status moves forward with time since the order was placed
+function getOrderStatus(order){
+  const t = order && order.placedAt ? Date.parse(order.placedAt) : NaN;
+  const steps = ['Order confirmed', 'Shipped', 'Out for delivery', 'Delivered'];
+  if(isNaN(t)) return { label: steps[0], step: 1, steps };
+  const days = (Date.now() - t) / 86400000;
+  const step = days >= 3 ? 4 : days >= 2 ? 3 : days >= 1 ? 2 : 1;
+  return { label: steps[step - 1], step, steps };
+}
+function normalizeOrderId(id){
+  return String(id || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
 }
 
 function syncAuthUI(){
@@ -193,7 +362,7 @@ function setupHeaderSearch(){
       if(!matches.length){
         dropdown.innerHTML = `
           <div class="search-drop-empty">
-            <span>No results for "${q}"</span>
+            <span>No results for "${escapeHTML(q)}"</span>
             <a href="shop.html?search=${encodeURIComponent(q)}" class="search-drop-link">Browse full shop →</a>
           </div>
         `;
@@ -214,7 +383,7 @@ function setupHeaderSearch(){
           </a>
         `).join('')}
         <a href="shop.html?search=${encodeURIComponent(q)}" class="search-drop-all">
-          View all results for "${q}" →
+          View all results for "${escapeHTML(q)}" →
         </a>
       `;
       dropdown.classList.add('open');
@@ -251,6 +420,8 @@ function setupHeaderSearch(){
     });
   });
 }
+
+window.addEventListener('storage', () => { syncBadges(); });
 
 document.addEventListener('DOMContentLoaded', () => {
   syncBadges();

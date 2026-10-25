@@ -131,7 +131,7 @@
           </div>
           <div class="field">
             <label for="cOrder">Order number (optional)</label>
-            <input type="text" id="cOrder" placeholder="e.g. TN482913">
+            <input type="text" id="cOrder" placeholder="e.g. TN-482913">
           </div>
           <div class="field">
             <label for="cMsg">Message</label>
@@ -285,6 +285,20 @@
     const order = document.getElementById('cOrder').value.trim();
     const message = document.getElementById('cMsg').value.trim();
     
+    // Real order lookup (only orders placed by the logged-in account can be tracked)
+    let trackingHTML = '';
+    if(order){
+      const me = getAuthUser();
+      const found = getAllOrders().find(o => normalizeOrderId(o.orderId) === normalizeOrderId(order) && me && o.userId === me.id);
+      const boxStyle = 'margin-top:10px; padding:10px; background:var(--bg); border-radius:8px; font-size:12px; color:var(--text-muted); border:1px solid var(--border);';
+      if(found){
+        const st = getOrderStatus(found);
+        trackingHTML = `<div style="${boxStyle}">📦 <strong>Order ${escapeHTML(found.orderId)}:</strong> ${escapeHTML(st.label)} · Estimated delivery ${escapeHTML(found.estimatedDelivery)}</div>`;
+      } else {
+        trackingHTML = `<div style="${boxStyle}">📦 We couldn’t find order <strong>${escapeHTML(order)}</strong> on your account${me ? '' : ' — please log in to track it'}. Our team will check it manually.</div>`;
+      }
+    }
+
     const ticketId = 'TN-' + Math.floor(100000 + Math.random() * 900000);
     const dateStr = new Date().toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric', hour:'2-digit', minute:'2-digit' });
 
@@ -302,9 +316,9 @@
           <span style="font-family:'IBM Plex Mono', monospace; font-size:12.5px; font-weight:700; color:var(--cyan);">Ticket #${ticketId}</span>
           <span style="font-size:11px; padding:3px 8px; border-radius:999px; background:var(--good); color:#052e16; font-weight:700;">RECEIVED</span>
         </div>
-        <p style="font-size:13.5px; color:var(--text); margin-bottom:6px;"><strong>Thank you, ${name}!</strong> Your inquiry regarding <em>${topic}</em> has been assigned to our support team.</p>
-        <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:4px;">A confirmation was sent to <strong>${email}</strong>. Expected response within <strong>2–4 hours</strong>.</p>
-        ${order ? `<div style="margin-top:10px; padding:10px; background:var(--bg); border-radius:8px; font-size:12px; color:var(--text-muted); border:1px solid var(--border);">📦 <strong>Order Tracking (${order}):</strong> In transit with Bluedart Express — On schedule for delivery.</div>` : ''}
+        <p style="font-size:13.5px; color:var(--text); margin-bottom:6px;"><strong>Thank you, ${escapeHTML(name)}!</strong> Your inquiry regarding <em>${escapeHTML(topic)}</em> has been assigned to our support team.</p>
+        <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:4px;">A confirmation was sent to <strong>${escapeHTML(email)}</strong>. Expected response within <strong>2–4 hours</strong>.</p>
+        ${trackingHTML}
       </div>
     `;
     note.classList.add('show');

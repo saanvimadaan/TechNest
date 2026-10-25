@@ -29,6 +29,14 @@ const summaryTitle = document.getElementById('summaryTitle');
 const summaryItemsList = document.getElementById('summaryItemsList');
 const promoRow = document.getElementById('promoRow');
 
+// ---------- Login gate ----------
+function requireLogin(){
+  if(getAuthUser()) return true;
+  showToast('Please log in to continue checkout');
+  setTimeout(() => { window.location.href = 'login.html?next=cart.html'; }, 900);
+  return false;
+}
+
 // ---------- Cart Lines Render ----------
 function lineHTML(line){
   const p = line.product;
@@ -137,7 +145,7 @@ function updateSummary(){
 
   // Update Main Action Button text
   if(currentStep === 1){
-    mainCheckoutBtn.textContent = 'Proceed to Address →';
+    mainCheckoutBtn.textContent = getAuthUser() ? 'Proceed to Address →' : 'Log in to Checkout →';
     backStepBtn.style.display = 'none';
     summaryTitle.textContent = 'Order summary';
   } else if(currentStep === 2){
@@ -185,7 +193,7 @@ function goToStep(step){
       addrSummary.textContent = `${address.fullName}, ${address.city} (${address.pin})`;
     }
     if(document.getElementById('saveAddrCheck').checked){
-      localStorage.setItem('technest_saved_address', JSON.stringify(address));
+      saveAddress(address);
     }
   }
 
@@ -228,8 +236,7 @@ function getAddressData(){
 
 function initAddressFields(){
   // Auto-fill from saved address or auth user
-  let saved = null;
-  try { saved = JSON.parse(localStorage.getItem('technest_saved_address')); } catch(e){}
+  const saved = getSavedAddress();
   const authUser = typeof getAuthUser === 'function' ? getAuthUser() : null;
 
   const fullNameInput = document.getElementById('addrFullName');
@@ -247,7 +254,7 @@ function initAddressFields(){
     if(landmarkInput) landmarkInput.value = saved.landmark || '';
     if(pinInput) pinInput.value = saved.pin || '';
     if(cityInput) cityInput.value = saved.city || '';
-    if(stateInput) stateInput.value = saved.state || 'Karnataka';
+    if(stateInput) stateInput.value = saved.state || '';
     if(saved.type) selectAddrType(saved.type);
   } else if(authUser){
     if(fullNameInput) fullNameInput.value = authUser.name || '';
@@ -368,6 +375,8 @@ function setupPaymentHandlers(){
 
 // ---------- Order Placement ----------
 function processOrderPlacement(){
+  if(!requireLogin()) return;
+  const user = getAuthUser();
   const lines = cartLines();
   if(!lines.length){
     showToast('Your cart is empty');
@@ -414,7 +423,9 @@ function processOrderPlacement(){
 
   setTimeout(() => {
     mainCheckoutBtn.disabled = false;
-    const orderNum = 'TN-' + Math.floor(100000 + Math.random() * 900000);
+    const existingIds = new Set(getAllOrders().map(o => o.orderId));
+    let orderNum;
+    do { orderNum = 'TN-' + Math.floor(100000 + Math.random() * 900000); } while(existingIds.has(orderNum));
     const subtotal = cartSubtotal();
     const shipping = subtotal >= FREE_SHIP_THRESHOLD ? 0 : SHIP_COST;
     const discountAmt = Math.round(subtotal * promoDiscount);
@@ -428,6 +439,9 @@ function processOrderPlacement(){
 
     const orderRecord = {
       orderId: orderNum,
+      userId: user.id,
+      userEmail: user.email,
+      placedAt: new Date().toISOString(),
       datePlaced: todayStr,
       estimatedDelivery: deliveryDateStr,
       subtotal, shipping, discount: discountAmt, total,
@@ -444,11 +458,7 @@ function processOrderPlacement(){
     };
 
     // Save to technest_orders history
-    try {
-      let orders = JSON.parse(localStorage.getItem('technest_orders')) || [];
-      orders.unshift(orderRecord);
-      localStorage.setItem('technest_orders', JSON.stringify(orders));
-    } catch(err){}
+    try { saveOrder(orderRecord); } catch(err){ console.error('Could not save order', err); }
 
     // Clear cart
     saveCart([]);
@@ -534,6 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   mainCheckoutBtn.addEventListener('click', () => {
     if(currentStep === 1){
+      if(!requireLogin()) return;
       goToStep(2);
     } else if(currentStep === 2){
       goToStep(3);
